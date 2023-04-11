@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/Bancadati/ipmitool"
 	"github.com/gin-gonic/gin"
+	"github.com/squarefactory/ipmitool"
 )
 
 func Status(c *gin.Context) {
