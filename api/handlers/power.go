@@ -8,7 +8,8 @@ import (
 )
 
 func PowerOn(c *gin.Context) {
-	cl, err := ipmitool.NewClient("192.198.1.1", 0, "IPMIUSER", "Password")
+	hostname := c.Param("host")
+	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -33,8 +34,8 @@ func PowerOn(c *gin.Context) {
 }
 
 func PowerOff(c *gin.Context) {
-
-	cl, err := ipmitool.NewClient("192.198.1.1", 0, "IPMIUSER", "Password")
+	hostname := c.Param("host")
+	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -60,7 +61,8 @@ func PowerOff(c *gin.Context) {
 
 func Cycle(c *gin.Context) {
 
-	cl, err := ipmitool.NewClient("192.198.1.1", 0, "IPMIUSER", "Password")
+	hostname := c.Param("host")
+	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
