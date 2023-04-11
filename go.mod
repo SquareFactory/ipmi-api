@@ -3,11 +3,14 @@ module github.com/squarefactory/ipmi-api
 go 1.20
 
 require (
-	github.com/Bancadati/ipmitool v0.0.0-20200526160457-24c4bb96458d // indirect
+	github.com/gin-gonic/gin v1.9.0
+	github.com/squarefactory/ipmitool v0.0.0-20230411131013-f36f270ea246
+)
+
+require (
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.9.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.11.2 // indirect
