@@ -1,5 +1,5 @@
 # ------------------------------------
-FROM golang:1.20-alpine as api-builder
+FROM docker.io/library/golang:1.20-alpine as api-builder
 # ------------------------------------
 
 WORKDIR /work 
