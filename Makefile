@@ -7,6 +7,9 @@ VERSION = $(or ${TAG_NAME},$(TAG_NAME_DEV)-dev)
 bin/ipmi-api: $(GO_SRCS) set-version
 	go build -o "$@" ./main.go
 
+bin/ipmi-api-darwin-amd64: $(GO_SRCS) set-version
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o "$@" ./main.go
+
 bin/ipmi-api-darwin-arm64: $(GO_SRCS) set-version
 	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o "$@" ./main.go
 
