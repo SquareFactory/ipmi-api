@@ -1,5 +1,5 @@
 # ------------------------------------
-FROM golang:latest as api-builder
+FROM golang:1.20-alpine as api-builder
 # ------------------------------------
 
 WORKDIR /work 
