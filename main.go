@@ -10,8 +10,10 @@ import (
 
 func main() {
 
-	r := gin.Default()
+	// set ipmiuser and password
+	secrets.ReadSecret()
 
+	r := gin.Default()
 	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
 		secrets.IpmiUsername: secrets.IpmiPassword,
 	}))
