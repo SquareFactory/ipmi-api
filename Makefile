@@ -7,47 +7,7 @@ VERSION = $(or ${TAG_NAME},$(TAG_NAME_DEV)-dev)
 bin/ipmi-api: $(GO_SRCS) set-version
 	go build -o "$@" ./main.go
 
-bin/ipmi-api-darwin-amd64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o "$@" ./main.go
-
-bin/ipmi-api-darwin-arm64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o "$@" ./main.go
-
-bin/ipmi-api-freebsd-amd64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=freebsd GOARCH=amd64 go build -o "$@" ./main.go
-
-bin/ipmi-api-freebsd-arm64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=freebsd GOARCH=arm64 go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-amd64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-arm64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-mips64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=mips64 go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-mips64le: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=mips64le go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-ppc64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64 go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-ppc64le: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64le go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-riscv64: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 go build -o "$@" ./main.go
-
-bin/ipmi-api-linux-s390x: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=linux GOARCH=s390x go build -o "$@" ./main.go
-
-bin/ipmi-api-windows-amd64.exe: $(GO_SRCS) set-version
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o "$@" ./main.go
-
-bins := ipmi-api-darwin-amd64 ipmi-api-darwin-arm64 ipmi-api-freebsd-arm64 ipmi-api-freebsd-arm64 ipmi-api-linux-amd64 ipmi-api-linux-arm64 ipmi-api-linux-mips64 ipmi-api-linux-mips64le ipmi-api-linux-ppc64 ipmi-api-linux-ppc64le ipmi-api-linux-riscv64 ipmi-api-linux-s390x ipmi-api-windows-amd64.exe
-
+bins := ipmi-api
 bin/checksums.txt: $(addprefix bin/,$(bins))
 	sha256sum -b $(addprefix bin/,$(bins)) | sed 's/bin\///' > $@
 
