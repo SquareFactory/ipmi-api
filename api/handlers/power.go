@@ -9,7 +9,14 @@ import (
 
 func PowerOn(c *gin.Context) {
 	hostname := c.Param("host")
-	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
+	username, password, ok := c.Request.BasicAuth()
+
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	cl, err := ipmitool.NewClient(hostname, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -35,7 +42,14 @@ func PowerOn(c *gin.Context) {
 
 func PowerOff(c *gin.Context) {
 	hostname := c.Param("host")
-	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
+	username, password, ok := c.Request.BasicAuth()
+
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	cl, err := ipmitool.NewClient(hostname, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -62,7 +76,14 @@ func PowerOff(c *gin.Context) {
 func Cycle(c *gin.Context) {
 
 	hostname := c.Param("host")
-	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
+	username, password, ok := c.Request.BasicAuth()
+
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	cl, err := ipmitool.NewClient(hostname, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -89,7 +110,14 @@ func Cycle(c *gin.Context) {
 
 func Soft(c *gin.Context) {
 	hostname := c.Param("host")
-	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
+	username, password, ok := c.Request.BasicAuth()
+
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	cl, err := ipmitool.NewClient(hostname, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -116,7 +144,14 @@ func Soft(c *gin.Context) {
 
 func Reset(c *gin.Context) {
 	hostname := c.Param("host")
-	cl, err := ipmitool.NewClient(hostname, 0, "IPMIUSER", "Password")
+	username, password, ok := c.Request.BasicAuth()
+
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	cl, err := ipmitool.NewClient(hostname, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
