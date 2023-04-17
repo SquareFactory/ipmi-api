@@ -1,4 +1,4 @@
-# IPMI API
+ # IPMI API
 
 A golang ipmitool API for [Cluster Factory](https://github.com/SquareFactory/ClusterFactory-CE).
 
@@ -16,4 +16,5 @@ A golang ipmitool API for [Cluster Factory](https://github.com/SquareFactory/Clu
 | POST   | /host/:host/soft   | Soft-shutdown of OS via ACPI.                                     |
 | POST   | /host/:host/reset  | Hard reset.                                                       |
 
-:host being the BMC IP adress / hostname.
+:host being the hostname associated to the BMC IP address.
+Those are defined in a Kubernetes configMap using key-value pairs and set as environment variables within the API.
