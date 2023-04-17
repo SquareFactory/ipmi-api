@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"os"
 
@@ -11,20 +12,24 @@ import (
 func PowerOn(c *gin.Context) {
 	hostname := c.Param("host")
 	hostIP := os.Getenv(hostname)
+	data, err := c.GetRawData()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	credential := Credential{}
+	if err := json.Unmarshal(data, &credential); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if len(hostIP) == 0 {
 		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
 		return
 	}
 
-	username, password, ok := c.Request.BasicAuth()
-
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, credential.Username, credential.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -51,25 +56,28 @@ func PowerOn(c *gin.Context) {
 func PowerOff(c *gin.Context) {
 	hostname := c.Param("host")
 	hostIP := os.Getenv(hostname)
+	data, err := c.GetRawData()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	credential := Credential{}
+	if err := json.Unmarshal(data, &credential); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if len(hostIP) == 0 {
 		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
 		return
 	}
 
-	username, password, ok := c.Request.BasicAuth()
-
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, credential.Username, credential.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
 	status, err := cl.Power.Status()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -91,25 +99,28 @@ func PowerOff(c *gin.Context) {
 func Cycle(c *gin.Context) {
 	hostname := c.Param("host")
 	hostIP := os.Getenv(hostname)
+	data, err := c.GetRawData()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	credential := Credential{}
+	if err := json.Unmarshal(data, &credential); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if len(hostIP) == 0 {
 		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
 		return
 	}
 
-	username, password, ok := c.Request.BasicAuth()
-
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, credential.Username, credential.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
 	status, err := cl.Power.Status()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -132,24 +143,29 @@ func Cycle(c *gin.Context) {
 func Soft(c *gin.Context) {
 	hostname := c.Param("host")
 	hostIP := os.Getenv(hostname)
+	data, err := c.GetRawData()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	credential := Credential{}
+	if err := json.Unmarshal(data, &credential); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if len(hostIP) == 0 {
 		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
 		return
 	}
 
-	username, password, ok := c.Request.BasicAuth()
-
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, credential.Username, credential.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	status, err := cl.Power.Status()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -172,20 +188,24 @@ func Soft(c *gin.Context) {
 func Reset(c *gin.Context) {
 	hostname := c.Param("host")
 	hostIP := os.Getenv(hostname)
+	data, err := c.GetRawData()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	credential := Credential{}
+	if err := json.Unmarshal(data, &credential); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if len(hostIP) == 0 {
 		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
 		return
 	}
 
-	username, password, ok := c.Request.BasicAuth()
-
-	if !ok {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-
-	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, credential.Username, credential.Password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
