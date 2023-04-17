@@ -24,11 +24,6 @@ func main() {
 	authorized.GET("/host/:host/status", handlers.Status)
 	authorized.POST("/host/:host/soft", handlers.Soft)
 	authorized.POST("/host/:host/reset", handlers.Reset)
-	//r.POST("/host/{host}/boot", handlers.boot)
-	//r.GET("/host/{host}/stat", handlers.stat)
-	//r.GET("/host/{host}/state", handlers.state)
-	//r.POST("/host/{host}/wake", handlers.wake)
-	//r.POST("/host/{host}/suspend", handlers.suspend)
 
 	err := r.Run(":8080")
 	if err != nil {
