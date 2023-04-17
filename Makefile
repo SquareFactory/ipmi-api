@@ -5,7 +5,7 @@ GIT_COMMIT = $(shell git rev-parse --short=7 HEAD)
 VERSION = $(or ${TAG_NAME},$(TAG_NAME_DEV)-dev)
 
 bin/ipmi-api: $(GO_SRCS) set-version
-	go build -o "$@" ./main.go
+	CGO_ENABLED=0 go build -o "$@" ./main.go
 
 bins := ipmi-api
 bin/checksums.txt: $(addprefix bin/,$(bins))
