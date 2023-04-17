@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/squarefactory/ipmitool"
@@ -9,6 +10,13 @@ import (
 
 func PowerOn(c *gin.Context) {
 	hostname := c.Param("host")
+	hostIP := os.Getenv(hostname)
+
+	if len(hostIP) == 0 {
+		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
+		return
+	}
+
 	username, password, ok := c.Request.BasicAuth()
 
 	if !ok {
@@ -16,7 +24,7 @@ func PowerOn(c *gin.Context) {
 		return
 	}
 
-	cl, err := ipmitool.NewClient(hostname, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -42,6 +50,13 @@ func PowerOn(c *gin.Context) {
 
 func PowerOff(c *gin.Context) {
 	hostname := c.Param("host")
+	hostIP := os.Getenv(hostname)
+
+	if len(hostIP) == 0 {
+		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
+		return
+	}
+
 	username, password, ok := c.Request.BasicAuth()
 
 	if !ok {
@@ -49,7 +64,7 @@ func PowerOff(c *gin.Context) {
 		return
 	}
 
-	cl, err := ipmitool.NewClient(hostname, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -74,8 +89,14 @@ func PowerOff(c *gin.Context) {
 }
 
 func Cycle(c *gin.Context) {
-
 	hostname := c.Param("host")
+	hostIP := os.Getenv(hostname)
+
+	if len(hostIP) == 0 {
+		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
+		return
+	}
+
 	username, password, ok := c.Request.BasicAuth()
 
 	if !ok {
@@ -83,7 +104,7 @@ func Cycle(c *gin.Context) {
 		return
 	}
 
-	cl, err := ipmitool.NewClient(hostname, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -110,6 +131,13 @@ func Cycle(c *gin.Context) {
 
 func Soft(c *gin.Context) {
 	hostname := c.Param("host")
+	hostIP := os.Getenv(hostname)
+
+	if len(hostIP) == 0 {
+		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
+		return
+	}
+
 	username, password, ok := c.Request.BasicAuth()
 
 	if !ok {
@@ -117,12 +145,11 @@ func Soft(c *gin.Context) {
 		return
 	}
 
-	cl, err := ipmitool.NewClient(hostname, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
 	status, err := cl.Power.Status()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -144,6 +171,13 @@ func Soft(c *gin.Context) {
 
 func Reset(c *gin.Context) {
 	hostname := c.Param("host")
+	hostIP := os.Getenv(hostname)
+
+	if len(hostIP) == 0 {
+		c.JSON(http.StatusNoContent, gin.H{"error": "Host not defined"})
+		return
+	}
+
 	username, password, ok := c.Request.BasicAuth()
 
 	if !ok {
@@ -151,7 +185,7 @@ func Reset(c *gin.Context) {
 		return
 	}
 
-	cl, err := ipmitool.NewClient(hostname, 0, username, password)
+	cl, err := ipmitool.NewClient(hostIP, 0, username, password)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
